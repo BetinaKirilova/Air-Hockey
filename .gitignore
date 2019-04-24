@@ -1,23 +1,293 @@
-# Compiled class file
-*.class
+float l = 435;
+float r = 460;
+float xLeft=200;
+float yLeft=250;
+float xRight=700;
+float yRight=250;
+float speedX = 25;
+float speedY = 25;
+float x = 450;
+float y = 250;
+int diam = 25;
+int speed =35;
+int elr = 50;
+int elr2 = 30;
+int scoreRed = 0;
+int scoreBlue = 0;
+int wonBlueRounds=0;
+int wonRedRounds=0;
+String round_One_Blue = " Blue Player Wins The Match ";
+String round_One_Red = "  Red Player Wins The Match ";
+String reset = "Press the mouse to reset";
 
-# Log file
-*.log
+void setup() {
+  size(900, 500);
+  background(0);
+  reset();
+}
 
-# BlueJ files
-*.ctxt
+void draw() {
+  chertichki();
+  top4etata();
+  krug4e();
+  granici();
+  bounce();
+  score();
+  rounds();
+}
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+void chertichki() {
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+  strokeWeight(20);
+  stroke(#FEFF0F);
+  line(65, 50, l, 50); //1 yellow
+  line(50, 65, 50, 200); //v1 yellow
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+  stroke(#05E302);
+  line(r, 50, 835, 50); //2 green
+  line(850, 65, 850, 200);//v2 green
+
+  stroke(#F5301E);
+  line(65, 450, l, 450); //3 red
+  line(50, 300, 50, 435);//v3 red
+
+  stroke(#16DDED);
+  line(r, 450, 835, 450); //4 blue
+  line(850, 300, 850, 435);//v4 blue
+
+  strokeWeight(15);
+
+  stroke(#FAE123);
+  line(65, 50, l, 50); //1
+  line(50, 65, 50, 200); //v1
+
+  stroke(#05E302);
+  line(r, 50, 835, 50); //2
+  line(850, 65, 850, 200);//v2
+
+  stroke(#F5301E);
+  line(65, 450, l, 450); //3
+  line(50, 300, 50, 435);//v3
+
+  stroke(#16DDED);
+  line(r, 450, 835, 450); //4
+  line(850, 300, 850, 435);//v4
+
+  strokeWeight(10);
+
+  stroke(#FCFFA7);
+  line(65, 50, l, 50); //1
+  line(50, 65, 50, 200); //v1
+
+  stroke(#9FFC9E);
+  line(r, 50, 835, 50); //2
+  line(850, 65, 850, 200);//v2
+
+  stroke(#FFC9CA);
+  line(65, 450, l, 450); //3
+  line(50, 300, 50, 435);//v3
+
+  stroke(#C9FFFA);
+  line(r, 450, 835, 450); //4
+  line(850, 300, 850, 435);//v4
+
+  noFill();
+  stroke(#76724B);
+  arc(850, 250, 80, 80, radians(90), radians(270));
+  arc(50, 250, 80, 80, radians(-90), radians(90));
+  strokeWeight(4);
+  stroke(0);
+  arc(850, 250, 80, 80, radians(90), radians(270));
+  arc(50, 250, 80, 80, radians(-90), radians(90));
+
+
+  strokeWeight(6);
+  stroke(#76724B);
+  noFill();
+  ellipse(450, 250, 150, 150);
+  line(448, 64, 448, 445);
+  fill(0);
+  line(448, 65, 448, 445);
+  filter(ERODE);
+  filter(BLUR, 1.5);
+}
+
+void top4etata() {
+
+  noFill();
+  stroke(255, 0, 0);
+  ellipse(xLeft, yLeft, elr, elr);
+  ellipse(xLeft, yLeft, elr2, elr2);
+
+  noFill();
+  stroke(0, 0, 255);
+  ellipse(xRight, yRight, elr, elr);
+  ellipse(xRight, yRight, elr2, elr2);
+
+  if (keyPressed && key=='s') {
+    yLeft =yLeft + speed;
+  }      
+
+  if (keyPressed && key=='w') {
+    yLeft =yLeft - speed;
+  }
+  if (keyPressed && key=='a') {
+    xLeft =xLeft - speed;
+  }
+  if (keyPressed && key=='d') {
+    xLeft =xLeft + speed;
+  }
+
+  if (keyPressed && keyCode==DOWN) {
+    yRight = yRight+speed;
+  }
+  if (keyPressed && keyCode==UP) {
+    yRight = yRight-speed;
+  }
+  if (keyPressed && keyCode==LEFT) {
+    xRight = xRight-speed;
+  }
+  if (keyPressed && keyCode==RIGHT) {
+    xRight = xRight+speed;
+  }
+  if (yRight <= 60 ) {
+    yRight=80;
+  }
+
+  if (yRight>=440) {
+    yRight=430;
+  }
+
+  if (xRight >=840) {
+    xRight=830;
+  }
+  if (xRight <=448) {
+    xRight=448+elr;
+  }
+
+  if (yLeft <= 60 ) {
+    yLeft=80;
+  }
+
+  if (yLeft>=440) {
+    yLeft=430;
+  }
+
+  if (xLeft <=50) {
+    xLeft=70;
+  }
+
+  if (xLeft >=448) {
+    xLeft=448-elr;
+  }
+}
+
+void krug4e() {
+  fill(#EDEDED);
+  strokeWeight(3);
+  stroke(255);
+  ellipse(x, y, diam, diam);
+  y +=-speedY;
+  x-=-speedX;
+}
+
+
+void granici() {
+
+  if (y<50+diam ) {//горна част
+    speedY-=15;
+    speedY=-10;
+  }
+  if (x<50+diam) {//лява част
+    speedX+=15;
+    speedX=10;
+  } else if ( y<200  && y>300) {//лява част
+    speedX-=15;
+    speedX=-10;
+  }
+  if (y>450-diam ) {//долна част
+    speedY+=15;
+    speedY=10;
+  }
+  if (y>200 && y<300 && x<51+diam) {//гол(син)
+    speedX=10;
+    x=450;
+    y=250;
+    scoreBlue++;
+  }
+  if (x>850-diam) {//дясна част
+    speedX-=15;
+    speedX-=10;
+  }
+  if (y>200 && y<300 && x>851-diam) {//гол(червен)
+    speedX=10;
+    x=450;
+    y=250;
+    scoreRed++;
+  }
+}
+
+void bounce() {
+  if (dist(x, y, xRight, yRight)<elr) {
+    speedX-=-25;
+    speedY=random(-20, 20);
+    speedX=-20;
+    speedY=random(-20, 20);
+  }
+  if (dist(x, y, xLeft, yLeft)<elr) {
+    speedX=+20;
+    speedY-=random(-20, +20);
+    speedX=+20;
+    speedY=random(-20, 20);
+  }
+}
+void score() {
+  textSize(40);
+  fill(255, 0, 0);
+  text(scoreRed, 400, 40);
+  fill(255);
+  text(":", 443, 40);
+  fill(0, 0, 255);
+  text(scoreBlue, 463, 40);
+}
+void rounds() {
+  if (scoreRed==5) {
+    background(0);
+    fill(255, 0, 0);
+    textSize(40);
+    text(round_One_Red, 150, 260);
+    text(reset, 190, 320);
+    if (mousePressed) {
+      reset();
+    }
+  }
+  if (scoreBlue==5 ) {
+    background(0);
+    fill(0, 0, 255);
+    textSize(40);
+    text(round_One_Blue, 130, 260);
+    reset();
+    if (mousePressed) {
+      reset();
+    }
+   }
+  }
+
+  void reset() {
+    x=450;
+    y=250;
+    scoreRed=0;
+    scoreBlue=0;
+    speed=35;
+    xRight=700;
+    yRight=250;
+    xLeft=200;
+    yLeft=250;
+    speedX=10;
+    speedY=10;
+    diam=25;
+  }
+
+  void mousePressed() {
+    reset();
+  }
